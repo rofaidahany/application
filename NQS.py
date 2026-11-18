@@ -44,9 +44,9 @@ def questions():
 
 @app.route('/search')
 def search():
-    q = f'%{request.args.get('q','')}%'
+    q = f"%{request.args.get('q','')}%"
     with sqlite3.connect(DB) as db:
-        n = db.excute('SELECT * FROM news WHERE title LIKE ? OR content LIKE ?',(q,q)).fetchall()
+        n = db.execute('SELECT * FROM news WHERE title LIKE ? OR content LIKE ?',(q,q)).fetchall()
         qs = db.execute('SELECT * FROM questions WHERE q LIKE ? OR a LIKE ?',(q,q)).fetchall()
         return jsonify({
                         'news':[{'id':r[0],'title':r[1],'content':r[2]}for r in n],
